@@ -7,16 +7,18 @@ using System.Reflection.Emit;
 using System.Linq.Expressions;
 
 [HarmonyPatch]
-public static class CreatePropertyWriterPatch
+public static class ExpressionFactoryUtilitiesPatch
 {
-    public static MethodBase TargetMethod()
+    public static IEnumerable<MethodBase> TargetMethods()
     {
+        const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
         var type = typeof(Remora.Rest.Json.DataObjectConverter<,>)
             .Assembly
             .GetType("Remora.Rest.Json.Reflection.ExpressionFactoryUtilities")!;
 
-        return type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-            .Single(m => m.Name == "CreatePropertyWriter");
+        yield return type.GetMethods(bindingFlags).Single(m => m.Name == "CreateFactoryParameterless");
+        yield return type.GetMethods(bindingFlags).Single(m => m.Name == "CreatePropertyGetter");
+        yield return type.GetMethods(bindingFlags).Single(m => m.Name == "CreatePropertyWriter");
     }
 
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -39,6 +41,6 @@ public static class CompileHelper
 
     public static Delegate Compile(LambdaExpression expression) =>
         UseFEC
-            ? expression.CompileFast() ?? expression.Compile()
+            ? expression.CompileFast()
             : expression.Compile();
 }

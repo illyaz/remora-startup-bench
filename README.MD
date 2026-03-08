@@ -9,7 +9,7 @@ as a drop-in replacement.
 ## How It Works
 
 [Lib.Harmony](https://github.com/pardeike/Harmony) patches
-`ExpressionFactoryUtilities.CreatePropertyWriter` at runtime to redirect
+`ExpressionFactoryUtilities` at runtime to redirect
 `Compile()` → `CompileFast()` without any changes to the source.
 
 ## Running
@@ -32,9 +32,9 @@ Intel Core i9-14900K 3.20GHz, 1 CPU, 32 logical and 24 physical cores
 
 | Method       | Job       | Runtime   | Mean         | Error     | StdDev    | Ratio  | RatioSD |
 |------------- |---------- |---------- |-------------:|----------:|----------:|-------:|--------:|
-| Original     | .NET 10.0 | .NET 10.0 | 1,415.535 us | 7.8831 us | 6.5828 us | 402.69 |    8.05 |                                                                                                         
-| FastCompiler | .NET 10.0 | .NET 10.0 |     3.517 us | 0.0534 us | 0.0712 us |   1.00 |    0.03 |
+| Original     | .NET 10.0 | .NET 10.0 | 1,415.925 us | 6.9176 us | 6.1323 us | 407.28 |    3.43 |                                                                                                         
+| FastCompiler | .NET 10.0 | .NET 10.0 |     3.477 us | 0.0299 us | 0.0265 us |   1.00 |    0.01 |
 |              |           |           |              |           |           |        |         |
-| Original     | .NET 9.0  | .NET 9.0  |   290.462 us | 3.4586 us | 3.2351 us |  72.12 |    1.55 |
-| FastCompiler | .NET 9.0  | .NET 9.0  |     4.029 us | 0.0786 us | 0.0772 us |   1.00 |    0.03 |
+| Original     | .NET 9.0  | .NET 9.0  |   288.147 us | 5.3529 us | 5.0071 us |  73.46 |    1.85 |
+| FastCompiler | .NET 9.0  | .NET 9.0  |     3.924 us | 0.0737 us | 0.0756 us |   1.00 |    0.03 |
 ```
